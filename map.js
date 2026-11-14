@@ -10,7 +10,7 @@ console.log('Mapbox GL JS Loaded:', mapboxgl);
 // Step 1.3: create the map
 // ============================================================
 // Paste your PUBLIC token (starts with "pk.") from https://account.mapbox.com
-mapboxgl.accessToken = 'YOUR_ACCESS_TOKEN_HERE';
+mapboxgl.accessToken = 'pk.eyJ1IjoiamtlZXRvbi11Y3NkIiwiYSI6ImNtd2dxdjNnYzBiMWIyeXBqcWVrY3p6cnQifQ.cAQNoPGX8JfCwAnVhiIuMw';
 
 const map = new mapboxgl.Map({
   container: 'map', // id of the <div>

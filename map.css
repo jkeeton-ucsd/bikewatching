@@ -1,0 +1,107 @@
+/* ---------- Step 1.2: map fills the remaining page height ---------- */
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+#map {
+  flex: 1; /* grow to fill the column left over by header + legend */
+  min-height: 400px;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* ---------- Step 3.2: SVG overlay sits ON TOP of the Mapbox canvas ---------- */
+#map svg {
+  position: absolute; /* take it out of flow so it overlaps the canvas */
+  z-index: 1; /* stack above the canvas (needs positioning to work) */
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* let drags/scrolls fall through to the map */
+}
+
+/* ---------- Step 6.1/6.2: shared color logic for circles AND legend ---------- */
+#map circle,
+.legend > div {
+  --color-departures: steelblue;
+  --color-arrivals: darkorange;
+  /* --departure-ratio is 0, 0.5 or 1 (set from JS / inline style) */
+  --color: color-mix(
+    in oklch,
+    var(--color-departures) calc(100% * var(--departure-ratio)),
+    var(--color-arrivals)
+  );
+}
+
+/* ---------- Step 4.3/4.4: station circles ---------- */
+#map circle {
+  fill: var(--color);
+  fill-opacity: 0.6;
+  stroke: white;
+  stroke-width: 1;
+  pointer-events: auto; /* re-enable hover so <title> tooltips work */
+}
+
+/* ---------- Step 5.1: header + slider ---------- */
+header {
+  display: flex;
+  gap: 1em;
+  align-items: baseline;
+}
+
+header h1 {
+  margin-block: 0.5em;
+}
+
+header label {
+  margin-left: auto; /* push filter to the right edge */
+}
+
+header input[type='range'] {
+  width: 20em;
+  vertical-align: middle;
+}
+
+/* own line so changing text doesn't shift the slider */
+header time,
+header em {
+  display: block;
+  text-align: right;
+}
+
+header em {
+  color: #888;
+  font-style: italic;
+}
+
+/* ---------- Step 6.2: legend (Design 2: swatches + labels) ---------- */
+.legend {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2em; /* big gap BETWEEN items... */
+  margin-block: 0.75em;
+  font-size: 0.85em;
+}
+
+.legend-label {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #888;
+}
+
+.legend > div {
+  display: flex;
+  align-items: center;
+  gap: 0.4em; /* ...small gap between swatch and its label (proximity) */
+}
+
+.legend > div::before {
+  content: '';
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  background: var(--color);
+}
